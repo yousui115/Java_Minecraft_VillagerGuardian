@@ -36,7 +36,7 @@ public class EntityAIFollowPlayerToVillage extends EntityAIBase
     public EntityAIFollowPlayerToVillage(EntityCreature ownerIn)
     {
         taskOwner = ownerIn;
-        this.setMutexBits(~0x100);
+        this.setMutexBits(0x111);
     }
 
     @Override
@@ -144,6 +144,13 @@ public class EntityAIFollowPlayerToVillage extends EntityAIBase
                 {
                     matteTime = 100;
                     player.sendMessage(new TextComponentTranslation(taskOwner.getName() + " : " + I18n.translateToLocal("wait")));
+                }
+
+                if (player.getDistance(taskOwner) >= 25f)
+                {
+                    player.sendMessage(new TextComponentTranslation(taskOwner.getName() + " : " + I18n.translateToLocal("bye")));
+                    player = null;
+
                 }
             }
         }
