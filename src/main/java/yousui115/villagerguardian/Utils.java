@@ -34,6 +34,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.network.datasync.EntityDataManager.DataEntry;
 import net.minecraft.pathfinding.PathNavigateGround;
 import yousui115.villagerguardian.ai.common.EntityAIDefendVillage2;
 import yousui115.villagerguardian.ai.common.EntityAIFollowPlayerToVillage;
@@ -302,9 +303,6 @@ public class Utils
             isGuardian = nbtVG.getBoolean(NBT_KEY_IS_GUARDIAN);
         }
 
-        //TODO:Debug
-//        if (mobIn instanceof EntityPigZombie) { System.out.println("PigZombie : 3"); }
-
         Utils.registerDataParameter(mobIn, uuid, isGuardian);
     }
 
@@ -318,22 +316,15 @@ public class Utils
     {
         //DataManagerのバニラ構成が完了している時点で走らせること。
 
+        //■クラス（フルパス）
         Class clazz = mobIn.getClass();
 
+        //■登録するDataParameter
         List<DataParameter> list = null;
-
-        //TODO:Debug
-//        if (mobIn instanceof EntityPigZombie) { System.out.println("PigZombie : 4 : " + clazz.getName()); }
 
         //■未登録のEntity
         if (ENTITY_PARAM_MAP.containsKey(clazz.getName()) == false)
         {
-            //TODO:Debug
-//            if (mobIn instanceof EntityPigZombie) { System.out.println("PigZombie : 5"); }
-
-            //Debug
-            System.out.println("DataParameter register : " + clazz.getName());
-
             list = Lists.<DataParameter>newArrayList();
 
             //TODO:念のため、全EntityCreatureを対象にパラメータを作ってる。対象者のみに絞るとPCに優しいか。
@@ -345,6 +336,10 @@ public class Utils
             list.add(param_is_guardian);
 
             ENTITY_PARAM_MAP.put(clazz.getName(), list);
+
+            //Debug
+            System.out.println("DataParameter register : " + clazz.getName() + " : " + param_pair.getId() + " : " + param_is_guardian.getId());
+
         }
         else
         {
@@ -355,18 +350,41 @@ public class Utils
         //■登録
         try
         {
+            //■対象MOBのデータパラメータを取得
             List< EntityDataManager.DataEntry<?>> listEntry = mobIn.getDataManager().getAll();
 
+            //■対象Mobへ追加する、DataParamのID
             int id = list.get(0).getId();
-            EntityDataManager.DataEntry entry = listEntry.size() <= id ? null : listEntry.get(id);
 
-            //TODO:なぜ登録済みなのか：チャンク凍結とかそこら辺のからみ？
-            if (entry != null && entry.getKey() == list.get(0))
+            //■対象MobのDataParamリストから、上記IDに設定されているEntryを取得。なければNull
+            EntityDataManager.DataEntry entry = null;//listEntry.size() <= id ? null : listEntry.get(id);
+
+            boolean alreadySetting = false;
+
+            for (java.util.Iterator<DataEntry<?>> itr = listEntry.iterator(); itr.hasNext();)
             {
-//                System.out.println("登録済みなんだけどー");
+                entry = itr.next();
+
+                if (entry.getKey().getId() == id)
+                {
+                    alreadySetting = true;
+                    break;
+                }
             }
 
-            if (entry == null)
+            //TODO:なぜ登録済みなのか：チャンク凍結とかそこら辺のからみ？
+            if (alreadySetting == true)
+            {
+                if (entry.getKey() == list.get(0))
+                {
+                    System.out.println("Already registered. : " + clazz.getName());
+                }
+                else
+                {
+                    System.out.println("Already registered. But unknown DataEntry");
+                }
+            }
+            else
             {
                 mobIn.getDataManager().register(list.get(0), Optional.fromNullable(uuidIn));
                 mobIn.getDataManager().register(list.get(1), isGuardianIn);

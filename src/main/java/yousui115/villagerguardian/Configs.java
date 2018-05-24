@@ -14,6 +14,10 @@ public class Configs
     private static boolean isNoticeDespawnMessage;
     public static boolean getIsNoticeDespawnMessage() { return isNoticeDespawnMessage; }
 
+
+    private static String NOTICE_DEBUG = "notice (Debug)";
+
+
     /**
      *
      * @param event
@@ -25,9 +29,9 @@ public class Configs
         try
         {
             cfg.load();
-            isNoticeDamageMessage  = cfg.getBoolean("damage", "notice (Debug)", false, "display a damage message");
-            isNoticeDeathMessage   = cfg.getBoolean("death", "notice (Debug)", false, "display a death message");
-            isNoticeDespawnMessage = cfg.getBoolean("despawn", "notice (Debug)", false, "display a despawn message");
+            isNoticeDamageMessage  = cfg.getBoolean("damage", NOTICE_DEBUG, false, "display a damage message");
+            isNoticeDeathMessage   = cfg.getBoolean("death", NOTICE_DEBUG, false, "display a death message");
+            isNoticeDespawnMessage = cfg.getBoolean("despawn", NOTICE_DEBUG, false, "display a despawn message");
         }
         finally
         {

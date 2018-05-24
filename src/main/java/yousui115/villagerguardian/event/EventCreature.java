@@ -25,18 +25,12 @@ public class EventCreature
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOW)
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void joinWorldCreature(EntityJoinWorldEvent event)
     {
-        //TODO:Debug
-//        if (event.getEntity() instanceof EntityPigZombie) { System.out.println("PigZombie : 1"); }
-
         //■対象者
         if (event.getEntity() instanceof EntityCreature == false) { return; }
         EntityCreature mob = (EntityCreature)event.getEntity();
-
-        //TODO:Debug
-//        if (event.getEntity() instanceof EntityPigZombie) { System.out.println("PigZombie : 2"); }
 
         //■入隊条件
 //        if (Utils.canChangeVillagerDefender(mob) == false) { return; }

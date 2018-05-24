@@ -18,7 +18,7 @@ public class EntityAINegotiationMob extends EntityAIBase
 
     private Path path;
 
-    private EntityCreature target;
+    private EntityCreature targetVG;
 
     private int tick;
 
@@ -31,10 +31,10 @@ public class EntityAINegotiationMob extends EntityAIBase
     public boolean shouldExecute()
     {
         //■低確率！
-        if (taskOwner.getRNG().nextInt(500) != 0) { return false; }
+        if (taskOwner.getRNG().nextInt(1000) != 0) { return false; }
 
         //■必ずインスタンスが生成されて帰ってくる
-        List<EntityCreature> entities = taskOwner.world.<EntityCreature>getEntitiesWithinAABB(EntityCreature.class, taskOwner.getEntityBoundingBox().grow(6.0D, 2.0D, 6.0D), new Predicate<EntityCreature>()
+        List<EntityCreature> VGs = taskOwner.world.<EntityCreature>getEntitiesWithinAABB(EntityCreature.class, taskOwner.getEntityBoundingBox().grow(6.0D, 2.0D, 6.0D), new Predicate<EntityCreature>()
         {
             @Override
             public boolean apply(EntityCreature target)
@@ -54,13 +54,13 @@ public class EntityAINegotiationMob extends EntityAIBase
         });
 
         //■ひとりで行ききれるの？
-        for (EntityCreature cre : entities)
+        for (EntityCreature vg : VGs)
         {
-            path = taskOwner.getNavigator().getPathToEntityLiving(cre);
+            path = taskOwner.getNavigator().getPathToEntityLiving(vg);
 
             if (path != null)
             {
-                target = cre;
+                targetVG = vg;
                 return true;
             }
         }
@@ -86,40 +86,22 @@ public class EntityAINegotiationMob extends EntityAIBase
     public void resetTask()
     {
         //■交渉成立
-        if (target != null && target.isEntityAlive() == true &&
-            taskOwner.getDistance(target) < 2f)
+        if (targetVG != null && targetVG.isEntityAlive() == true &&
+            taskOwner.getDistance(targetVG) < 2f)
         {
-            Utils.setPairUUID(target, taskOwner.getUniqueID());
+            //■VGに自分のUUIDを設定する。
+            Utils.setPairUUID(targetVG, taskOwner.getUniqueID());
 
-//            taskOwner.spawnExplosionParticle();
-//            taskOwner.playSound(SoundEvents.ENTITY_GENERIC_DEATH, 1.0f, 1.0f);
-
+            //■フッフーン！
             taskOwner.playSound(SoundEvents.ENTITY_VILLAGER_YES, 1.0f, 1.0f);
 
-//            taskOwner.world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, taskOwner.posX + (double)(taskOwner.getRNG().nextFloat() * taskOwner.width * 2.0F) - (double)taskOwner.width, taskOwner.posY + 0.5D + (double)(taskOwner.getRNG().nextFloat() * taskOwner.height), taskOwner.posZ + (double)(taskOwner.getRNG().nextFloat() * taskOwner.width * 2.0F) - (double)taskOwner.width, 0.0D, 0.0D, 0.0D);
-
+            //■ハートのパーティクル
             taskOwner.world.setEntityState(taskOwner, (byte)12);
-
-//            taskOwner.addPotionEffect(new PotionEffect(MobEffects.GLOWING, 40, 0));
-//            for (int i = 0; i < 5; ++i)
-//            {
-//                Random rand = target.getRNG();
-//
-//                double d0 = rand.nextGaussian() * 0.02D;
-//                double d1 = rand.nextGaussian() * 0.02D;
-//                double d2 = rand.nextGaussian() * 0.02D;
-//
-//                Utils.setPairUUID(target, taskOwner.getUniqueID());
-//                target.world.spawnParticle(EnumParticleTypes.HEART, target.posX + (double)(target.getRNG().nextFloat() * target.width * 2.0F) - (double)target.width,
-//                                                                    target.posY + 1.0D + (double)(rand.nextFloat() * target.height),
-//                                                                    target.posZ + (double)(rand.nextFloat() * target.width * 2.0F) - (double)target.width,
-//                                                                    d0, d1, d2);
-//            }
         }
 
         tick = 0;
         path = null;
-        target = null;
+        targetVG = null;
     }
 
     @Override
