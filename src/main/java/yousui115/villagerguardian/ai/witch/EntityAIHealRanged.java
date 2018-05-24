@@ -168,7 +168,7 @@ public class EntityAIHealRanged extends EntityAIBase
             {
                 potiontype = PotionTypes.FIRE_RESISTANCE;
             }
-            else if (targetIn.getHealth() < targetIn.getMaxHealth() * 2 / 3)
+            else if (targetIn.getHealth() < targetIn.getMaxHealth() * 4 / 5)
             {
                 potiontype = PotionTypes.STRONG_HEALING;
             }

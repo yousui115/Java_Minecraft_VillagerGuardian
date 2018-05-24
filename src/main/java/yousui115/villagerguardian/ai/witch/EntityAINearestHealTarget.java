@@ -152,9 +152,10 @@ public class EntityAINearestHealTarget <T extends EntityLivingBase> extends Enti
     public boolean needHealTarget(T targetIn)
     {
         //■「HPが2/3より少なく または リジェネ無し」 または 「燃えてる かつ レジスタンス無し」
-        boolean flag1 = targetIn.getHealth() < targetIn.getMaxHealth() * 2 / 3 && targetIn.isPotionActive(MobEffects.REGENERATION) == false;
+        boolean flag0 = targetIn.getHealth() < targetIn.getMaxHealth();
+        boolean flag1 = targetIn.getHealth() < targetIn.getMaxHealth() * 4 / 5 || targetIn.isPotionActive(MobEffects.REGENERATION) == false;
         boolean flag2 = targetIn.isBurning() && targetIn.isPotionActive(MobEffects.FIRE_RESISTANCE) == false;
-        return flag1 || flag2;
+        return flag0 && (flag1 || flag2);
     }
 
     protected AxisAlignedBB getTargetableArea(double targetDistance)
