@@ -84,21 +84,21 @@ public class EventCreature
         //■サーバーのみ
         if (event.getWorld().isRemote) { return; }
 
-        //■メインハンドのみ
+        //■メインハンド に
         if (event.getHand() != EnumHand.MAIN_HAND) { return; }
+
+        //■アレ を持っている
+        if (event.getEntityPlayer().getHeldItemMainhand().getItem() != Items.EMERALD) { return; }
 
         //■対象者
         if (event.getTarget() instanceof EntityCreature == false) { return; }
         EntityCreature mob = (EntityCreature)event.getTarget();
 
-        //■対象資格があるか
-        if (Utils.canChangeVillagerDefender(mob) == false) { return; }
-
         //■村人護り隊員は除外
         if (Utils.isGuardian(mob) == true) { return; }
 
-        //■プレイヤーがアレを持ってる時のみ
-        if (event.getEntityPlayer().getHeldItemMainhand().getItem() != Items.EMERALD) { return; }
+        //■対象資格があるか
+        if (Utils.canChangeVillagerDefender(mob) == false) { return; }
 
         //■一個使う
         event.getEntityPlayer().getHeldItemMainhand().shrink(1);

@@ -16,6 +16,7 @@ import com.google.common.collect.Maps;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIAttackRanged;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -36,6 +37,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.datasync.EntityDataManager.DataEntry;
 import net.minecraft.pathfinding.PathNavigateGround;
+import net.minecraft.util.math.BlockPos;
 import yousui115.villagerguardian.ai.common.EntityAIDefendVillage2;
 import yousui115.villagerguardian.ai.common.EntityAIFollowPlayerToVillage;
 import yousui115.villagerguardian.ai.common.EntityAIFollowVillagerOwner;
@@ -268,6 +270,31 @@ public class Utils
     }
 
 
+    /**
+     * ■雨の中にいるか否か
+     * @param livingIn
+     * @return
+     */
+    public static boolean isInRain(EntityLivingBase livingIn)
+    {
+//        //■水に浸かってる。
+//        if (livingIn.isInWater() == true) { return false; }
+
+        //■雨かな？
+        BlockPos.PooledMutableBlockPos blockpos$pooledmutableblockpos = BlockPos.PooledMutableBlockPos.retain(livingIn.posX, livingIn.posY, livingIn.posZ);
+
+        if (!livingIn.world.isRainingAt(blockpos$pooledmutableblockpos) && !livingIn.world.isRainingAt(blockpos$pooledmutableblockpos.setPos(livingIn.posX, livingIn.posY + (double)livingIn.height, livingIn.posZ)))
+        {
+            blockpos$pooledmutableblockpos.release();
+            return false;
+        }
+        else
+        {
+            blockpos$pooledmutableblockpos.release();
+            return true;
+        }
+
+    }
 
 
     //===========================================NBT/DataParam==============================================================================
