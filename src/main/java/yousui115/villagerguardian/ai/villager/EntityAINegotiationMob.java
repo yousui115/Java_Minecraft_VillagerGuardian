@@ -10,7 +10,7 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.pathfinding.Path;
-import yousui115.villagerguardian.Utils;
+import yousui115.villagerguardian.util.Utils;
 
 public class EntityAINegotiationMob extends EntityAIBase
 {

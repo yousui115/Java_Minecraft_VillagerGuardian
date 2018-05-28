@@ -16,7 +16,7 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import yousui115.villagerguardian.Utils;
+import yousui115.villagerguardian.util.Utils;
 
 public class EntityAIFollowVillagerOwner extends EntityAIBase
 {

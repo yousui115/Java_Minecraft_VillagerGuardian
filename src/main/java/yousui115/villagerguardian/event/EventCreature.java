@@ -16,8 +16,8 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent.AllowDespawn;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import yousui115.villagerguardian.Configs;
-import yousui115.villagerguardian.Utils;
+import yousui115.villagerguardian.util.Configs;
+import yousui115.villagerguardian.util.Utils;
 
 public class EventCreature
 {

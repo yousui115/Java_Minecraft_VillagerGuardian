@@ -4,4 +4,6 @@ public class CommonProxy
 {
     //■レイヤーの追加
     public void addLayer(){}
+
+    public void registerModel(){}
 }

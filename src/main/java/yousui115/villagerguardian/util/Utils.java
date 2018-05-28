@@ -1,4 +1,4 @@
-package yousui115.villagerguardian;
+package yousui115.villagerguardian.util;
 
 import java.util.List;
 import java.util.Map;
@@ -38,6 +38,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.datasync.EntityDataManager.DataEntry;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.math.BlockPos;
+import yousui115.villagerguardian.VillagerGuardian;
 import yousui115.villagerguardian.ai.common.EntityAIDefendVillage2;
 import yousui115.villagerguardian.ai.common.EntityAIFollowPlayerToVillage;
 import yousui115.villagerguardian.ai.common.EntityAIFollowVillagerOwner;

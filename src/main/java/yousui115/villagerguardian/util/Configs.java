@@ -1,4 +1,4 @@
-package yousui115.villagerguardian;
+package yousui115.villagerguardian.util;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -17,6 +17,10 @@ public class Configs
 
     private static String NOTICE_DEBUG = "notice (Debug)";
 
+
+    //TODO ここがしっくりくる。
+    //■コンフィグパラメータ以外
+    public static boolean isInstHMaG = false;
 
     /**
      *

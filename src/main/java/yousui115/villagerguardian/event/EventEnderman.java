@@ -17,8 +17,8 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import yousui115.villagerguardian.Utils;
 import yousui115.villagerguardian.VillagerGuardian;
+import yousui115.villagerguardian.util.Utils;
 
 public class EventEnderman
 {

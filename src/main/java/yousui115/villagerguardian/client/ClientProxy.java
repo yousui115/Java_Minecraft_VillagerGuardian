@@ -6,6 +6,9 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import yousui115.villagerguardian.CommonProxy;
+import yousui115.villagerguardian.util.Configs;
+import yousui115.villagerguardian.util.Utils_HMaG;
+import yousui115.villagerguardian.util.VGItems;
 
 public class ClientProxy extends CommonProxy
 {
@@ -28,6 +31,18 @@ public class ClientProxy extends CommonProxy
                                                                renderEnderman.getMainModel().bipedBody));
             }
         }
+
+        //■あどおーん
+        if (Configs.isInstHMaG == true)
+        {
+            Utils_HMaG.addLayer(getRenderMgr());
+        }
+    }
+
+    @Override
+    public void registerModel()
+    {
+        VGItems.registerModel();
     }
 
     //■RenderManager
