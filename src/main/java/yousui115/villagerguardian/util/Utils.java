@@ -26,6 +26,7 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityOcelot;
@@ -52,9 +53,11 @@ public class Utils
      */
     public static void reeducationAI(@Nonnull EntityCreature mobIn)
     {
-        //■行動AIの再教育（共通）
+        //■AI関連
+        // ▼行動AIの再教育（共通）
         tameAI(mobIn);
 
+        // ▼ターゲットAIの再教育
         if (mobIn instanceof EntityWitch)
         {
             //■ウィッチだけのスペシャルメニュー
@@ -102,7 +105,6 @@ public class Utils
      */
     public static void tameAI(@Nonnull EntityCreature mobIn)
     {
-
         //■プレイヤーさん、村までお願い。（共通）
         mobIn.tasks.addTask(1, new EntityAIFollowPlayerToVillage(mobIn));
 
@@ -209,6 +211,9 @@ public class Utils
                 {
                     //■クリーパーは避ける
                     if (target instanceof EntityCreeper) { return false; }
+
+                    //■エンダーマンは避ける（つーか、えぐぜきゅーたー対策）
+                    if (target instanceof EntityEnderman) { return false; }
 
                     //■他の村人護り隊は攻撃しない
                     if (target instanceof EntityCreature && Utils.isGuardian((EntityCreature)target)) { return false; }

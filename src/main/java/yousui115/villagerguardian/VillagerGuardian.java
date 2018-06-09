@@ -29,7 +29,7 @@ public class VillagerGuardian
     public static final String MOD_DOMAIN = "yousui115." + MOD_ID;
 
     public static final String MOD_NAME = "Villager Guardian";
-    public static final String VERSION  = "M1122_F2611_v6";
+    public static final String VERSION  = "M1122_F2611_v7";
 
     //■インスタント
     @Mod.Instance(MOD_ID)

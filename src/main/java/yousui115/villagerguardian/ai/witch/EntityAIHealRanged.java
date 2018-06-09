@@ -1,8 +1,10 @@
 package yousui115.villagerguardian.ai.witch;
 
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.EntityWitch;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.init.Items;
@@ -13,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.math.MathHelper;
+import yousui115.villagerguardian.util.Utils;
 
 public class EntityAIHealRanged extends EntityAIBase
 {
@@ -67,14 +70,19 @@ public class EntityAIHealRanged extends EntityAIBase
     {
         EntityLivingBase entitylivingbase = this.taskOwner.getAttackTarget();
 
-        if (entitylivingbase == null)
+        if (entitylivingbase instanceof EntityCreature == false || entitylivingbase.isEntityAlive() == false)
         {
             return false;
         }
-        else
+
+        if (Utils.isGuardian((EntityCreature)entitylivingbase) == true || entitylivingbase instanceof EntityVillager)
         {
             this.attackTarget = entitylivingbase;
             return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -92,6 +100,8 @@ public class EntityAIHealRanged extends EntityAIBase
     public void resetTask()
     {
         this.attackTarget = null;
+        this.taskOwner.setAttackTarget((EntityLivingBase)null);
+
         this.seeTime = 0;
         this.rangedAttackTime = -1;
     }

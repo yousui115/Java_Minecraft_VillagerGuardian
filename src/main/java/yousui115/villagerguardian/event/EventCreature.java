@@ -25,7 +25,7 @@ public class EventCreature
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public void joinWorldCreature(EntityJoinWorldEvent event)
     {
         //■対象者
@@ -39,9 +39,17 @@ public class EventCreature
         //  (内部でカスタムデータからの読み込みも行ってる)
         Utils.registerParam(mob);
 
-        //■村人護り隊員(自然発生アイアンゴーレムは無条件)
+        //■自然発生ゴーレム
         boolean isVillageGolem = mob instanceof EntityIronGolem && ((EntityIronGolem)mob).isPlayerCreated() == false;
-        if (Utils.isGuardian(mob) == true || isVillageGolem)
+
+        //■生まれたて ほやほや
+        if (isVillageGolem == true && Utils.isGuardian(mob) == false)
+        {
+            Utils.setIsGuardian(mob, true);
+            Utils.setPairUUID(mob, null);
+        }
+
+        if (Utils.isGuardian(mob) == true)
         {
             //■再教育
             Utils.reeducationAI(mob);
